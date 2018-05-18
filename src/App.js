@@ -1,46 +1,33 @@
 import React, { Component } from 'react';
-import NewQuizlet from './NewQuizlet/NewQuizlet.js';
-import ExistingQuizlet from './ExistingQuizlet/ExistingQuizlet.js';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import NewQuizlet from './NewQuizlet/js/NewQuizlet.js';
+import ExistingQuizlet from './ExistingQuizlet/js/ExistingQuizlet.js';
+import BackToMenu from './BackToMenu/js/BackToMenu';
+import LearningCenter from './LearningCenter/js/LearningCenter'; 
+import './App.css';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      choice: 0,
-      showMenu: true,
-    } 
-  }
-  pickChoice = (choice) => {
-    this.setState(() => {
-      return {
-        choice: choice,
-        showMenu: false,
-      }
-    });
-  }
-  returnMenu = () => {
-    this.setState(() => ({showMenu: true, choice: 0}));
-  }
-  render() {
-    let choice = this.state.choice;
-    console.log(choice);
-    let showMenu = this.state.showMenu;
+  render(){
     return (
-      <div className="App">
-        { choice === 1 ? <NewQuizlet /> 
-          : choice === 2 ? <ExistingQuizlet /> 
-          : null }
-        { showMenu ? <Menu pick={this.pickChoice}/> 
-          : <div className="exit-menu" onClick={this.returnMenu}>X</div>}
-      </div>
+      <Router>
+        <div>
+          <BackToMenu />
+          <Route exact path="/" component={Menu} />
+          <Route path="/existingquizlet" component={ExistingQuizlet} />
+          <Route path="/newquizlet" component={NewQuizlet} />
+          <Route path="/learn/:qname" component={LearningCenter} />
+        </div>
+      </Router>
     )
   }
 }
 
 //the menu
-const Menu = ({pick}) => {
-  return [<div key="1" className="new-quizlet" onClick={() => {pick(1)}}>New Quizlet </div>,
-    <div key="2" className="existing-quizlet" onClick={() => {pick(2)}}>Existing Quizlet</div> ] 
-};
+const Menu = () => (
+  <div className="menu-wrapper">
+    <div className="menu-choice"><Link to="newquizlet">New Quizlet</Link></div>
+    <div className="menu-choice"><Link to="/existingquizlet">Existing Quizlet</Link></div>
+  </div>
+);
 
 export default App;

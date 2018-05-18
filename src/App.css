@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.menu-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.menu-choice {
+    text-align: center;
+    display: inline-block;
+    margin: 20px;
+}
+.menu-choice > a {
+    font-size: 2em;
+    color: black;
+    text-decoration: none;
+}

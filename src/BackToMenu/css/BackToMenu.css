@@ -1,0 +1,9 @@
+.back-to-menu {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+.back-to-menu > a {
+    text-decoration: none;
+    font-size: 20px;
+}
