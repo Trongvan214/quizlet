@@ -14,7 +14,7 @@ export default class NewQuizlet extends Component {
     componentDidMount(){
         //have at least 2;
         let cards = this.state.cards;
-        cards.push({term: "", defintion: ""}, {term: "", definition: ""});
+        cards.push({term: "", definition: ""}, {term: "", definition: ""});
         this.setState({cards});
     }
     addMoreCard = () => {
