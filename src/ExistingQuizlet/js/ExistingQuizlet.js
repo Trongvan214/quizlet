@@ -12,7 +12,7 @@ export default class ExistingQuizlet extends Component {
         this.setState({quizlets});
     }
     handleClick = (title) => {
-        let target = '/learn/'.concat(title);
+        let target = '/quizlet/'.concat(title);
         this.props.history.push(target);
     }
     render(){
@@ -21,7 +21,14 @@ export default class ExistingQuizlet extends Component {
                 <h1>List of quizlets</h1>
                 {
                     this.state.quizlets.map((title,i) => {
-                        return <p key={i} onClick={()=>this.handleClick(title)}>{title}</p>
+                        let _title = title;
+                        let length = JSON.parse(localStorage.getItem(title)).length;
+                        return (
+                            <div className="quizlet-info" onClick={() => this.handleClick(title)} key={i}>
+                                <span className="quizlet-info-title">{_title}</span>{" "}
+                                <span className="quizlet-info-length">{length+" terms"}</span>
+                            </div>
+                        )
                     })
                 }
             </div>

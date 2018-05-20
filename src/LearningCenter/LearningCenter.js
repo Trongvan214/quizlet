@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import ShowCards from './ShowCards/js/ShowCards';
 
 export default class LearningCenter extends Component {
     state = { 
@@ -14,17 +16,16 @@ export default class LearningCenter extends Component {
         this.setState({title,cards});
     }
     render(){
+        const { title } = this.state;
+        const learningChoices = ["LEARN", "FLASHCARDS", "WRITE"];
         return (
             <div>
-                <h1>{this.state.title}</h1>
-                {
-                    this.state.cards.map((card,i) => (
-                        <React.Fragment key={i}>
-                            <p>Term Name: {card.term}</p>
-                            <p>Description Name: {card.definition}</p>
-                        </React.Fragment>
-                    ))
-                }
+                {learningChoices.map(choice => (
+                    <div key={choice}>
+                        <Link to={title+"/"+choice.toLowerCase()}>{choice}</Link>
+                    </div>
+                ))}
+                <ShowCards />
             </div>
         )
     }

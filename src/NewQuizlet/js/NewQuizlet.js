@@ -14,12 +14,12 @@ export default class NewQuizlet extends Component {
     componentDidMount(){
         //have at least 2;
         let cards = this.state.cards;
-        cards.push({term: "", defintion: ""}, {term: "", defintion: ""});
+        cards.push({term: "", defintion: ""}, {term: "", definition: ""});
         this.setState({cards});
     }
     addMoreCard = () => {
         let cards = this.state.cards.slice();
-        cards.push({term: "", defintion: ""});
+        cards.push({term: "", definition: ""});
         this.setState({cards});
     }
     onChangeTitle = (e) => {
@@ -44,7 +44,7 @@ export default class NewQuizlet extends Component {
         //put in localStorage
         else {
             localStorage.setItem(title, JSON.stringify(cards));
-            this.props.history.push('/learn/' + this.state.title);
+            this.props.history.push('/quizlet/' + this.state.title);
         }
         
     }
