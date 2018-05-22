@@ -11,15 +11,15 @@ export default class NewQuizlet extends Component {
             errorMsg: '',  
         }
     }
-    componentDidMount(){
+    componentWillMount(){
         //have at least 2;
-        let cards = this.state.cards;
-        cards.push({term: "", definition: ""}, {term: "", definition: ""});
+        let { cards } = this.state;
+        cards.push({term: "", definition: "", starred: false}, {term: "", definition: "", starred: false});
         this.setState({cards});
     }
     addMoreCard = () => {
         let cards = this.state.cards.slice();
-        cards.push({term: "", definition: ""});
+        cards.push({term: "", definition: "", starred: false});
         this.setState({cards});
     }
     onChangeTitle = (e) => {
@@ -43,6 +43,7 @@ export default class NewQuizlet extends Component {
         }
         //put in localStorage
         else {
+            cards.filter(card => card.term !== "");
             localStorage.setItem(title, JSON.stringify(cards));
             this.props.history.push('/quizlet/' + this.state.title);
         }

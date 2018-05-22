@@ -15,11 +15,11 @@ export default class MultipleChoice extends Component {
             userChoice: choice,
         })
     }
-    nextQuestion = () => {
+    nextQuestion = (isCorrect) => {
         this.setState({
             showAnswer: false,
         })
-        this.props.nextQuestion();
+        this.props.nextQuestion(isCorrect);
     }
     render(){
         const { question, choices, answer, answerWithProperty} = this.props;
@@ -31,14 +31,19 @@ export default class MultipleChoice extends Component {
                         nextQuestion={this.nextQuestion}
                         answerWithProperty={answerWithProperty}
                     />
-        return (
-                <div className="question-wrapper">
-                    <h1>{question}</h1>
-                    {choices.map(choice => (
-                        <div key={choice[answerWithProperty]} onClick={()=>this.pickChoice(choice)}>{choice[answerWithProperty]}</div>
-                    ))}
-                </div>
-        )
+        console.log(question, choices, answer, answerWithProperty);
+        if(question && choices && answer && answerWithProperty)
+            return (
+                    <div className="question-wrapper">
+                        <h1>{question}</h1>
+                        {choices.map(choice => {
+                            if(choice)
+                                return <div key={choice[answerWithProperty]} onClick={()=>this.pickChoice(choice)}>{choice[answerWithProperty]}</div>
+                            else return null
+                        })}
+                    </div>
+            )
+        return null;
     }
 }
 
@@ -67,7 +72,7 @@ class AnswerScreen extends Component {
                     :
                     null        
                 }
-                <Button type="button" bsStyle="danger" onClick={nextQuestion}>Next Question</Button>
+                <Button type="button" bsStyle="danger" onClick={()=>nextQuestion(isCorrect)}>Next Question</Button>
             </div>
         )
     }

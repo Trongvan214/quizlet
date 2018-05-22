@@ -4,7 +4,10 @@ import NewQuizlet from './NewQuizlet/js/NewQuizlet.js';
 import ExistingQuizlet from './ExistingQuizlet/js/ExistingQuizlet.js';
 import BackToMenu from './BackToMenu/js/BackToMenu';
 import LearningCenter from './LearningCenter/LearningCenter'; 
+import ToLearningCenter from './LearningCenter/ToLearningCenter'
 import LearnCards from './LearningCenter/LearnCards/js/LearnCards';
+// import WriteCards from './LearningCenter/WriteCards/js/WriteCards';
+import FlashCards from './LearningCenter/FlashCards/js/FlashCards';
 import './App.css';
 
 class App extends Component {
@@ -16,8 +19,12 @@ class App extends Component {
           <Route exact path="/" component={Menu} />
           <Route path="/existingquizlet" component={ExistingQuizlet} />
           <Route path="/newquizlet" component={NewQuizlet} />
+          <Route path="/quizlet/:qname" component={ToLearningCenter} />
           <Route exact path="/quizlet/:qname" component={LearningCenter} />
           <Route path="/quizlet/:qname/learn" component={LearnCards} />
+          {/* <Route path="/quizlet:qname/writecards" component={WriteCards} /> */}
+          <Route path="/quizlet/:qname/flashcards" component={FlashCards} />
+
         </div>
       </Router>
     )
