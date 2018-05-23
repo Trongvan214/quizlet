@@ -48,9 +48,9 @@ export default class FlashCardsQuiz extends Component {
         if(this.state.shouldStop) return <h1>Trong is the best</h1>;
         return (
             <div>
-                <Option getOption={this.updateOption} flashCards/>
+                <Option getOption={this.updateOption} />
+                <Button type="button" onClick={this.shuffle} bsStyle="danger">Shuffle</Button>
                 <ToggleCard term={currentCard.term} definition={currentCard.definition} />
-                <Button type="button" onClick={this.shuffle}>Shuffle</Button>
                 <Pager>
                     <Pager.Item onClick={this.nextCard}>Previous</Pager.Item>
                     <Pager.Item onClick={this.nextCard}>Next</Pager.Item>

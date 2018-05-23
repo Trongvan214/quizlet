@@ -10,14 +10,12 @@ export default class LearnCards extends Component {
         title: '',
         cards: [],
         currentQuestionIndex: -1,
-        currentQuestion: "",
-        currentChoiceCards: [],
-        currentCorrectAnswer: "",       
+        currentCard: {},
+        currentChoiceCards: [],      
         totalChoicesCount: 2,   //number of multiple choice
         option: {       
             studyType:  0,      //0 for study all cards, 1 for study starred cards
             answerWith: 1,      //0 for answer with term, 1 for defintion
-            questionWith: 0,
         },
         progress: {
             data: []            //array with all terms correct and incorrect count
@@ -35,6 +33,7 @@ export default class LearnCards extends Component {
             return;
         }
         let cards = JSON.parse(localStorage.getItem(title));
+        cards = shuffle(cards);
         let totalChoicesCount = cards.length < 4 ? cards.length : 4;
         let currentQuestionIndex = 0;
         this.setState({title, cards, totalChoicesCount, currentQuestionIndex});
@@ -56,77 +55,67 @@ export default class LearnCards extends Component {
             });
         }
         currentQuestionIndex++;
-        if(currentQuestionIndex > this.state.cards - 1){
-            this.setState({shouldStop: true});
+        if(currentQuestionIndex > this.state.cards.length - 1){
+            let cards = this.state.cards.slice();
+            cards = shuffle(cards);
+            currentQuestionIndex = 0;
+            this.setState({cards, currentQuestionIndex});
+            // this.setState({shouldStop: true});
             return;
         }
         this.setState({currentQuestionIndex});
     }
     shuffle = () => {
-        let cards = this.state.cards.slice();
-        cards = shuffle(cards);
-        this.setState({cards});
-
+        let currentQuestionIndex = getRandomInt(0, this.state.cards.length - 1);
+        this.setState({currentQuestionIndex});
     }
     updateOption = (obj) => {
-        this.setState({option: {...this.state.option, ...obj}});
+        this.setState({option: obj});
+    }
+    stop = () => {
+        this.setState({shouldStop: true});
     }
     componentDidUpdate(prevProps, prevState){
         //scenario to update state 
         let differentCurrentQuestionIndex = this.state.currentQuestionIndex !== prevState.currentQuestionIndex;
-        let differentCards = JSON.stringify(this.state.cards) !== JSON.stringify(prevState.cards);
         let differentOption = JSON.stringify(this.state.option) !== JSON.stringify(prevState.option);
-
-        if(differentCurrentQuestionIndex || differentCards){
-            let { questionWith, answerWith } = this.state.option;
+        if(differentCurrentQuestionIndex){
+            let { answerWith } = this.state.option;
             let { cards, currentQuestionIndex, totalChoicesCount } = this.state;
             let currentCard = cards[currentQuestionIndex];
-            let q = Object.keys(currentCard)[questionWith];
-            let a = Object.keys(currentCard)[answerWith];   
-            let currentQuestion = currentCard[q];
-            let currentCorrectAnswer = currentCard[a];   
             let currentChoiceCards = multipleChoices(cards, currentCard, totalChoicesCount, answerWith);
-            this.setState({cards, currentQuestion, currentCorrectAnswer, currentChoiceCards});
+            this.setState({cards, currentCard, currentChoiceCards});
         }
         else if(differentOption){
-            let { answerWith, questionWith, studyType } = this.state.option;
+            let { answerWith, studyType } = this.state.option;
             let { cards, currentQuestionIndex, totalChoicesCount } = this.state;
             if(studyType){
                 //filter and get cards that's starred
                 cards = cards.filter(card => card.starred);
+                console.log('study', cards);
             }
             //reset the index to 0 
             currentQuestionIndex = 0;
-
-            answerWith ? questionWith = 0 : questionWith = 1;
                         
-            let currentCard = cards[currentQuestionIndex];
-            let q = Object.keys(currentCard)[questionWith];
-            let a = Object.keys(currentCard)[answerWith];   
-            let currentQuestion = currentCard[q];
-            let currentCorrectAnswer = currentCard[a];   
+            let currentCard = cards[currentQuestionIndex]; 
             let currentChoiceCards = multipleChoices(cards, currentCard, totalChoicesCount, answerWith);
-            this.setState({option: {...this.state.option, questionWith}, cards, 
-                                        currentQuestionIndex, currentQuestion, 
-                                        currentCorrectAnswer, currentChoiceCards});
+            this.setState({cards, currentQuestionIndex, currentCard, currentChoiceCards});
         }
     }
     render(){
-        let templateCard = {"term": "", "definition": ""};
-        let answerWithProperty = Object.keys(templateCard)[this.state.option.answerWith];
         if(this.state.shouldStop) return <ProgressScreen progress={this.state.progress}/>
         return (
             <div>
-                <Option getOption={this.updateOption} learnCards/>
+                <Option getOption={this.updateOption} cards={this.state.cards}/>
                 <Button type="button" bsStyle="danger" onClick={this.shuffle}>Shuffle</Button>
                 <MultipleChoice 
-                    question={this.state.currentQuestion}
                     choices={this.state.currentChoiceCards}
-                    answer={this.state.currentCorrectAnswer}
+                    card={this.state.currentCard}
+                    answerWith={this.state.option.answerWith}
                     nextQuestion={this.nextQuestion}
-                    answerWithProperty={answerWithProperty}
                 />
-                <ScoreBoard scores={this.state.scores}/>
+                <ScoreBoard scores={this.state.scores} />
+                <Button type="button" bsStyle="danger" onClick={this.stop}>End</Button>
             </div>
         )
     }

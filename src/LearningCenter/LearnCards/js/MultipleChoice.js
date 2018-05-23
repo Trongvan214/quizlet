@@ -22,28 +22,27 @@ export default class MultipleChoice extends Component {
         this.props.nextQuestion(isCorrect);
     }
     render(){
-        const { question, choices, answer, answerWithProperty} = this.props;
+        const { card, choices, answerWith} = this.props;
+        let questionWith = answerWith ? 0 : 1;
+        let answerProperty = Object.keys(card)[answerWith];      // "term" or "definition"
+        let questionProperty = Object.keys(card)[questionWith]; // "term" or "definition"
         if(this.state.showAnswer) 
             return <AnswerScreen 
                         userChoice={this.state.userChoice}
-                        question={question}
-                        answer={answer}
+                        question={card[questionWith]}
+                        answer={card[answerWith]}
                         nextQuestion={this.nextQuestion}
-                        answerWithProperty={answerWithProperty}
+                        answerWithProperty={answerProperty}
                     />
-        console.log(question, choices, answer, answerWithProperty);
-        if(question && choices && answer && answerWithProperty)
-            return (
-                    <div className="question-wrapper">
-                        <h1>{question}</h1>
-                        {choices.map(choice => {
-                            if(choice)
-                                return <div key={choice[answerWithProperty]} onClick={()=>this.pickChoice(choice)}>{choice[answerWithProperty]}</div>
-                            else return null
-                        })}
-                    </div>
-            )
-        return null;
+        return (
+                <div className="question-wrapper">
+                    <h1>{card[questionProperty]}</h1>
+                    {choices.map(choice => (
+                        <div key={choice[answerProperty]} 
+                            onClick={()=>this.pickChoice(choice)}>{choice[answerProperty]}</div>
+                    ))}
+                </div>
+        )
     }
 }
 

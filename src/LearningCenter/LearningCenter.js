@@ -15,6 +15,10 @@ export default class LearningCenter extends Component {
         let cards = JSON.parse(localStorage.getItem(title));
         this.setState({title,cards});
     }
+    updateCards = (cards) => {
+        this.setState({cards});
+        localStorage.setItem(this.state.title, JSON.stringify(cards));
+    }
     render(){
         const { title } = this.state;
         const learningChoices = ["LEARN", "FLASHCARDS", "WRITE"];
@@ -25,7 +29,7 @@ export default class LearningCenter extends Component {
                         <Link to={title+"/"+choice.toLowerCase()}>{choice}</Link>
                     </div>
                 ))}
-                <ShowCards />
+                <ShowCards cards={this.state.cards} update={this.updateCards}/>
             </div>
         )
     }

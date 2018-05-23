@@ -21,7 +21,7 @@ class App extends Component {
           <Route path="/newquizlet" component={NewQuizlet} />
           <Route path="/quizlet/:qname" component={ToLearningCenter} />
           <Route exact path="/quizlet/:qname" component={LearningCenter} />
-          <Route path="/quizlet/:qname/learn" component={LearnCards} />
+          <Route exact path="/quizlet/:qname/learn/" component={LearnCards} />
           {/* <Route path="/quizlet:qname/writecards" component={WriteCards} /> */}
           <Route path="/quizlet/:qname/flashcards" component={FlashCards} />
 
