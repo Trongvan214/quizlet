@@ -85,15 +85,23 @@ export default class FlashCardsQuiz extends Component {
         this.setState({currentCardIndex});
         
     }
-    updateOption = (obj) => {
-        this.setState({option: obj});
+    updateOption = (value,option) => {
+        this.setState({option: {
+            ...this.state.option,
+            [option]: value,
+        }});
     }
     render(){
         if(this.state.shouldStop) return <h1>Trong is the best</h1>;
         return (
             <div>
                 <ToLearningCenter qname={this.state.title} />
-                <Option getOption={this.updateOption} cards={this.state.cards} flashCard/>
+                <Option 
+                    option={this.state.option} 
+                    getOption={this.updateOption} 
+                    cards={this.state.cards} 
+                    flashCard
+                />
                 <Button type="button" onClick={this.shuffle} bsStyle="danger">Shuffle</Button>
                 <ToggleCard 
                     card={this.state.currentCard} 

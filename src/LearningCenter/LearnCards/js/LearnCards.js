@@ -72,8 +72,11 @@ export default class LearnCards extends Component {
         let currentQuestionIndex = getRandomInt(0, this.state.cards.length - 1);
         this.setState({currentQuestionIndex});
     }
-    updateOption = (obj) => {
-        this.setState({option: obj});
+    updateOption = (value,option) => {
+        this.setState({option: {
+            ...this.state.option,
+            [option]: value,
+        }});
     }
     stop = () => {
         this.setState({shouldStop: true});
@@ -100,13 +103,13 @@ export default class LearnCards extends Component {
                 if(studyType){
                     //filter and get cards that's starred
                     cards = cards.filter(card => card.starred);
+                    //reset the index to 0 
+                    currentQuestionIndex = 0;
                 }
                 else {
                     cards = shuffle(copyCards);
                 }
             }
-            //reset the index to 0 
-            currentQuestionIndex = 0;
                         
             let currentCard = cards[currentQuestionIndex]; 
             let currentChoiceCards = multipleChoices(copyCards, currentCard, totalChoicesCount, answerWith);
@@ -119,7 +122,11 @@ export default class LearnCards extends Component {
         return (
             <div>
                 <ToLearningCenter qname={this.state.title} />
-                <Option getOption={this.updateOption} cards={this.state.cards}/>
+                <Option 
+                    option={this.state.option} 
+                    getOption={this.updateOption} 
+                    cards={this.state.cards}
+                />
                 <Button type="button" bsStyle="danger" onClick={this.shuffle}>Shuffle</Button>
                 <MultipleChoice 
                     choices={this.state.currentChoiceCards}
