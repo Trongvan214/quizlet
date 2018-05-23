@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import ToLearningCenter from '../../ToLearningCenter';
 import MultipleChoice from './MultipleChoice';
 import ProgressScreen from '../../ProgressScreen/js/ProgressScreen';
 import ScoreBoard from './ScoreBoard';
@@ -9,6 +10,7 @@ export default class LearnCards extends Component {
     state = { 
         title: '',
         cards: [],
+        copyCards: [],          //static won't be changing
         currentQuestionIndex: -1,
         currentCard: {},
         currentChoiceCards: [],      
@@ -34,9 +36,10 @@ export default class LearnCards extends Component {
         }
         let cards = JSON.parse(localStorage.getItem(title));
         cards = shuffle(cards);
+        let copyCards = cards;
         let totalChoicesCount = cards.length < 4 ? cards.length : 4;
         let currentQuestionIndex = 0;
-        this.setState({title, cards, totalChoicesCount, currentQuestionIndex});
+        this.setState({ title, cards, totalChoicesCount, currentQuestionIndex, copyCards });
     }
     nextQuestion = (isCorrect) => {
         let { currentQuestionIndex } = this.state;
@@ -82,30 +85,40 @@ export default class LearnCards extends Component {
         if(differentCurrentQuestionIndex){
             let { answerWith } = this.state.option;
             let { cards, currentQuestionIndex, totalChoicesCount } = this.state;
+            let copyCards = this.state.copyCards.slice();
             let currentCard = cards[currentQuestionIndex];
-            let currentChoiceCards = multipleChoices(cards, currentCard, totalChoicesCount, answerWith);
+            let currentChoiceCards = multipleChoices(copyCards, currentCard, totalChoicesCount, answerWith);
             this.setState({cards, currentCard, currentChoiceCards});
         }
-        else if(differentOption){
+        if(differentOption){
             let { answerWith, studyType } = this.state.option;
-            let { cards, currentQuestionIndex, totalChoicesCount } = this.state;
-            if(studyType){
-                //filter and get cards that's starred
-                cards = cards.filter(card => card.starred);
-                console.log('study', cards);
+            let { currentQuestionIndex, totalChoicesCount } = this.state;
+            let copyCards = this.state.copyCards.slice();
+            let cards = this.state.cards.slice();
+            let differentType = this.state.option.studyType !== prevState.option.studyType; 
+            if(differentType){
+                if(studyType){
+                    //filter and get cards that's starred
+                    cards = cards.filter(card => card.starred);
+                }
+                else {
+                    cards = shuffle(copyCards);
+                }
             }
             //reset the index to 0 
             currentQuestionIndex = 0;
                         
             let currentCard = cards[currentQuestionIndex]; 
-            let currentChoiceCards = multipleChoices(cards, currentCard, totalChoicesCount, answerWith);
-            this.setState({cards, currentQuestionIndex, currentCard, currentChoiceCards});
+            let currentChoiceCards = multipleChoices(copyCards, currentCard, totalChoicesCount, answerWith);
+            this.setState({cards, currentQuestionIndex, currentCard, currentChoiceCards });
         }
     }
     render(){
         if(this.state.shouldStop) return <ProgressScreen progress={this.state.progress}/>
+
         return (
             <div>
+                <ToLearningCenter qname={this.state.title} />
                 <Option getOption={this.updateOption} cards={this.state.cards}/>
                 <Button type="button" bsStyle="danger" onClick={this.shuffle}>Shuffle</Button>
                 <MultipleChoice 
@@ -124,16 +137,15 @@ export default class LearnCards extends Component {
 //helper functions
 
 //return an array cards with 1 right answer card inside all mix up 
-const multipleChoices = (ansArr, correctAnswerCard, howManyChoices, answerWith) => {
-
+const multipleChoices = (cards, correctAnswerCard, howManyChoices, answerWith) => {
     //if 4 cards those are the 4 answer shuffle
-    if(ansArr.length === 4) return shuffle(ansArr); 
+    if(cards.length <= 4) return shuffle(cards); 
 
     //choices of answer
     let arr = [];
 
     //filter that answer from the array
-    let filterArr = ansArr.filter(v => v.term !== correctAnswerCard.term) //the term name is unique
+    let filterArr = cards.filter(v => v.term !== correctAnswerCard.term) //the term name is unique
 
     let value, random;
     for(let i = 0; i < howManyChoices; i++){
@@ -152,6 +164,7 @@ const multipleChoices = (ansArr, correctAnswerCard, howManyChoices, answerWith) 
     random = getRandomInt(0,4);
 
     arr[random] = correctAnswerCard;
+    
     return arr;
 } 
 

@@ -7,14 +7,18 @@ export default class Option extends Component {
         disableStarredButton: true,
     }
     componentDidUpdate(prevProps, prevState){
-
         if(!this.props.cards) return;
 
         let differentCards = JSON.stringify(this.props.cards) !== JSON.stringify(prevProps.cards);
         if(differentCards){
-            let filterCards = this.props.cards.filter(card => card.term);
-            if(filterCards.length)
+            let filterCards = this.props.cards.filter(card => card.starred);
+            if(filterCards.length){
                 this.setState({disableStarredButton: false});
+            }
+            else {
+                this.setState({disableStarredButton: true});
+            }
+
         }
     }
     handleOptionChange = (e,option) => {
@@ -43,7 +47,7 @@ export default class Option extends Component {
                         onChange={(e)=>this.handleOptionChange(e,"answerWith")}>
                         <ToggleButton value={0}>Term</ToggleButton>
                         <ToggleButton value={1}>Definition</ToggleButton>
-                        {this.props.flashCards ? <ToggleButton value={2}>Both</ToggleButton> : null}
+                        {this.props.flashCard ? <ToggleButton value={2}>Both</ToggleButton> : null}
                     </ToggleButtonGroup>
                 </ButtonToolbar>
                 <Button type="submit" bsStyle="danger" onClick={this.handleSubmit}>Start Over</Button>

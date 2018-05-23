@@ -29,8 +29,8 @@ export default class MultipleChoice extends Component {
         if(this.state.showAnswer) 
             return <AnswerScreen 
                         userChoice={this.state.userChoice}
-                        question={card[questionWith]}
-                        answer={card[answerWith]}
+                        question={card[questionProperty]}
+                        answer={card[answerProperty]}
                         nextQuestion={this.nextQuestion}
                         answerWithProperty={answerProperty}
                     />
