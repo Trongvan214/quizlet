@@ -5,7 +5,7 @@ import ExistingQuizlet from './ExistingQuizlet/js/ExistingQuizlet.js';
 import BackToMenu from './BackToMenu/js/BackToMenu';
 import LearningCenter from './LearningCenter/LearningCenter'; 
 import LearnCards from './LearningCenter/LearnCards/js/LearnCards';
-// import WriteCards from './LearningCenter/WriteCards/js/WriteCards';
+import WriteCards from './LearningCenter/WriteCards/js/WriteCards';
 import FlashCards from './LearningCenter/FlashCards/js/FlashCards';
 import './App.css';
 
@@ -20,9 +20,8 @@ class App extends Component {
           <Route path="/newquizlet" component={NewQuizlet} />
           <Route exact path="/quizlet/:qname" component={LearningCenter} />
           <Route exact path="/quizlet/:qname/learn/" component={LearnCards} />
-          {/* <Route path="/quizlet:qname/writecards" component={WriteCards} /> */}
-          <Route path="/quizlet/:qname/flashcards" component={FlashCards} />
-
+          <Route exact path="/quizlet/:qname/write/" component={WriteCards} />
+          <Route exact path="/quizlet/:qname/flashcards/" component={FlashCards} />
         </div>
       </Router>
     )

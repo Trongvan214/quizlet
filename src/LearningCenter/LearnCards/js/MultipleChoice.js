@@ -52,7 +52,7 @@ class AnswerScreen extends Component {
         let isCorrect = userChoice[answerWithProperty] === answer;
         return (
             <div>
-                <h1>{ isCorrect ? "Correct! Good job" : "Study this one!"}</h1>
+                <h1>{ isCorrect ? "Correct! Good job" : "Incorrect! Study this one!"}</h1>
                 <div className="answer-screen-wrapper">
                     <p>TERM</p>
                     <p>{question}</p>

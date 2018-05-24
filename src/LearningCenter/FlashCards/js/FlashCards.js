@@ -81,7 +81,7 @@ export default class FlashCardsQuiz extends Component {
         this.setState({ currentCardIndex });
     }
     shuffle = () => {
-        let currentCardIndex = getRandomInt(0, this.state.cards.length - 1);
+        let currentCardIndex = getRandomInt(0, this.state.cards.length);
         this.setState({currentCardIndex});
         
     }

@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import ToLearningCenter from '../../ToLearningCenter';
 import MultipleChoice from './MultipleChoice';
 import ProgressScreen from '../../ProgressScreen/js/ProgressScreen';
-import ScoreBoard from './ScoreBoard';
+import ScoreBoard from '../../ScoreBoard';
 import Option from '../../Option';
 
 export default class LearnCards extends Component {
@@ -69,7 +69,7 @@ export default class LearnCards extends Component {
         this.setState({currentQuestionIndex});
     }
     shuffle = () => {
-        let currentQuestionIndex = getRandomInt(0, this.state.cards.length - 1);
+        let currentQuestionIndex = getRandomInt(0, this.state.cards.length);
         this.setState({currentQuestionIndex});
     }
     updateOption = (value,option) => {
