@@ -29,7 +29,7 @@ export default class LearningCenter extends Component {
                         <Link to={title+"/"+choice.toLowerCase()}>{choice}</Link>
                     </div>
                 ))}
-                <ShowCards cards={this.state.cards} update={this.updateCards}/>
+                <ShowCards cards={this.state.cards} update={this.updateCards} history={this.props.history} pathname={this.props.location.pathname}/>
             </div>
         )
     }

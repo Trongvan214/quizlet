@@ -9,13 +9,27 @@ export default class NewQuizlet extends Component {
             title: '',
             cards: [],      
             errorMsg: '',  
+            editMode: false,
         }
     }
-    componentWillMount(){
-        //have at least 2;
-        let { cards } = this.state;
-        cards.push({term: "", definition: "", starred: false}, {term: "", definition: "", starred: false});
-        this.setState({cards});
+    componentDidMount(){
+        let title = this.props.match.params.qname; 
+        console.log(title);
+        if(title !== undefined){
+            let cards = JSON.parse(localStorage.getItem(title)) 
+            if(cards){
+                this.setState({editMode: true, cards, title});
+            }
+            else {
+                //put a message saying wrong link
+            }
+        }
+        else {
+            //have at least 2;
+            let { cards } = this.state;
+            cards.push({term: "", definition: "", starred: false}, {term: "", definition: "", starred: false});
+            this.setState({cards});
+        }
     }
     addMoreCard = () => {
         let cards = this.state.cards.slice();
@@ -32,20 +46,21 @@ export default class NewQuizlet extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        const {cards, title} = this.state;
+        const { title } = this.state;
+        let cards = this.state.cards.slice();
+        cards = cards.filter(card => card.term !== "");
         //not fill title
         if(!title){
             this.setState({errorMsg: "YOU NEED A TITLE FOR THIS SET."});
         }
         //not fill first 2 cards
-        else if(!(cards[0].term && cards[1].term)){
+        else if(cards.length < 2){
             this.setState({errorMsg: "YOU NEED PUT DETAISL FOR TWO CARDS."});
         }
         //put in localStorage
         else {
-            cards.filter(card => card.term !== "");
             localStorage.setItem(title, JSON.stringify(cards));
-            this.props.history.push('/quizlet/' + this.state.title);
+            this.props.history.push('/qname/' + this.state.title);
         }
         
     }
@@ -71,7 +86,7 @@ export default class NewQuizlet extends Component {
                     ))}
                     <Button type="button" bsStyle="danger" onClick={this.addMoreCard}>Add card</Button>
                 </FormGroup>
-                <Button type="submit" bsStyle="success" onClick={this.handleSubmit}>Create</Button>
+                <Button type="submit" bsStyle="success" onClick={this.handleSubmit}>{this.state.editMode ? "Save" : "Create"}</Button>
                 {this.state.errorMsg}
             </form>
         )

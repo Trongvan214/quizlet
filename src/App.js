@@ -12,16 +12,17 @@ import './App.css';
 class App extends Component {
   render(){
     return (
-      <Router basename="/quizletApp">
+      <Router basename="/quizlet">
         <div>
           <BackToMenu />
           <Route exact path="/" component={Menu} />
           <Route path="/existingquizlet" component={ExistingQuizlet} />
           <Route path="/newquizlet" component={NewQuizlet} />
-          <Route exact path="/quizlet/:qname" component={LearningCenter} />
-          <Route exact path="/quizlet/:qname/learn/" component={LearnCards} />
-          <Route exact path="/quizlet/:qname/write/" component={WriteCards} />
-          <Route exact path="/quizlet/:qname/flashcards/" component={FlashCards} />
+          <Route path ="/qname/:qname/edit" component={NewQuizlet} />
+          <Route exact path="/qname/:qname/learn/" component={LearnCards} />
+          <Route exact path="/qname/:qname/write/" component={WriteCards} />
+          <Route exact path="/qname/:qname/flashcards/" component={FlashCards} />
+          <Route exact path="/qname/:qname" component={LearningCenter} />
         </div>
       </Router>
     )

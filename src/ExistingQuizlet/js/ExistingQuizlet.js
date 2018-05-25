@@ -12,7 +12,7 @@ export default class ExistingQuizlet extends Component {
         this.setState({quizlets});
     }
     handleClick = (title) => {
-        let target = '/quizlet/'.concat(title);
+        let target = '/qname/'.concat(title);
         this.props.history.push(target);
     }
     render(){

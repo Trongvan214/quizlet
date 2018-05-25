@@ -9,7 +9,7 @@ export default class ToLearningCenter extends Component {
         }
         return (
             <div style={style}>
-                 <Link to={`/quizlet/${this.props.qname}`}>LearningCenter</Link>
+                 <Link to={`/qname/${this.props.qname}`}>LearningCenter</Link>
             </div>
         )
     }

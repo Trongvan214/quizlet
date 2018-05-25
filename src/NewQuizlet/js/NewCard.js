@@ -11,11 +11,11 @@ export default class NewCard extends Component {
             <div className="card-form">
                 <FormGroup controlId="term">
                     <ControlLabel>Term</ControlLabel>{' '}
-                    <FormControl type="text" onChange={(e) => this.onChange(e,"term")}/>
+                    <FormControl type="text" onChange={(e) => this.onChange(e,"term")} value={this.props.term}/>
                 </FormGroup>{' '}
                 <FormGroup controlId="definition">
                     <ControlLabel>Definition</ControlLabel>{' '}
-                    <FormControl type="text" onChange={(e) => this.onChange(e,"definition")}/>
+                    <FormControl type="text" onChange={(e) => this.onChange(e,"definition")} value={this.props.definition}/>
                 </FormGroup>
             </div>
         )
