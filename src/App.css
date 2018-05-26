@@ -8,21 +8,42 @@ body {
     font-family: sans-serif;
     font-size: 16px;
 }
-
 .menu-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    width: 100%;
 }
 
 .menu-choice {
     text-align: center;
-    display: inline-block;
-    margin: 20px;
+    height: 100px;
+    width: 100%;
+    text-align: center;
 }
 .menu-choice > a {
+    position: relative;
     font-size: 2em;
     color: black;
     text-decoration: none;
+    line-height: 100px;
+}
+.menu-choice > a:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: black;
+    visibility: hidden;
+    border-radius: 5px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: .25s linear;
+}
+.menu-choice > a:hover:before {
+    visibility: visible;
+    transform: scaleX(1);
 }

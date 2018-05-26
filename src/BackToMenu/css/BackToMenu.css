@@ -1,7 +1,7 @@
 .back-to-menu {
-    position: absolute;
-    top: 10px;
-    right: 20px;
+    display: block;
+    text-align: right;
+    margin: 10px 15px 0 0;
 }
 .back-to-menu > a {
     text-decoration: none;

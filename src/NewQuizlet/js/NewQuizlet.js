@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {FormControl, FormGroup, Button} from 'react-bootstrap';
+import { Grid, Button } from 'react-bootstrap';
 import NewCard from './NewCard';
+import '../css/NewQuizlet.css';
 
 export default class NewQuizlet extends Component {
     constructor(props){
@@ -8,17 +9,18 @@ export default class NewQuizlet extends Component {
         this.state = {
             title: '',
             cards: [],      
-            errorMsg: '',  
+            titleMsg: "Title",
+            errorMsgCards: null,  
             editMode: false,
+            editUrl: false,
         }
     }
     componentDidMount(){
         let title = this.props.match.params.qname; 
-        console.log(title);
         if(title !== undefined){
             let cards = JSON.parse(localStorage.getItem(title)) 
             if(cards){
-                this.setState({editMode: true, cards, title});
+                this.setState({editUrl: true, cards, title});
             }
             else {
                 //put a message saying wrong link
@@ -51,10 +53,10 @@ export default class NewQuizlet extends Component {
         cards = cards.filter(card => card.term !== "");
         //not fill title
         if(!title){
-            this.setState({errorMsg: "YOU NEED A TITLE FOR THIS SET."});
+            this.setState({errorMsgTitle: "YOU NEED A TITLE FOR THIS SET."});
         }
         //not fill first 2 cards
-        else if(cards.length < 2){
+        if(cards.length < 2){
             this.setState({errorMsg: "YOU NEED PUT DETAISL FOR TWO CARDS."});
         }
         //put in localStorage
@@ -64,17 +66,38 @@ export default class NewQuizlet extends Component {
         }
         
     }
+    delete = (index) => {
+        let cards = this.state.cards.slice();
+        cards.splice(index, 1);
+        this.setState({cards});
+    }
+    edit = () => {
+        this.setState({editMode: !this.state.editMode});
+    }
     render(){
         return (
-            <form onSubmit={this.handleSubmit}>
-                <FormGroup controlId="newquizlet" ref={ref => this.value = ref}>
-                    <h1>Create a new study set</h1>
-                    <FormControl
-                        type="text"
-                        value={this.state.title}
-                        placeholder="Subject, chapter, unit"
-                        onChange={this.onChangeTitle}
-                    />
+            <Grid>
+                <form onSubmit={this.handleSubmit} autoComplete="off">
+                    <div className="newquizlet-wrapper">
+                        <div className="newquizlet-title">
+                            <h1>Create a new study set</h1>
+                            <input
+                                type="text"
+                                id="newcard-title"
+                                value={this.state.title}
+                                placeholder="Subject, chapter, unit"
+                                onChange={this.onChangeTitle}
+                            />
+                            <label htmlFor="newcard-title">Title</label>
+                        </div>
+                        <div className="newquizlet-buttons">
+                            <Button type="button" bsStyle="danger" bsSize="large" onClick={this.edit} className="newquizlet-edit"><span>Edit</span></Button>
+                            <Button type="submit" bsStyle="info" bsSize="large" onClick={this.handleSubmit} className="newquizlet-submit">
+                                {this.state.editUrl ? "Save" : "Create"}
+                            </Button>
+                        </div>
+                    </div>
+                    <div className="newquizlet-error">{this.state.errorMsg}</div>
                     {this.state.cards.map((card, index) => (
                         <NewCard 
                             key={index}
@@ -82,13 +105,13 @@ export default class NewQuizlet extends Component {
                             term={card.term} 
                             definition={card.definition}
                             onChange={this.onChangeCard}
+                            delete={this.delete} 
+                            editMode={this.state.editMode}
                         />
                     ))}
-                    <Button type="button" bsStyle="danger" onClick={this.addMoreCard}>Add card</Button>
-                </FormGroup>
-                <Button type="submit" bsStyle="success" onClick={this.handleSubmit}>{this.state.editMode ? "Save" : "Create"}</Button>
-                {this.state.errorMsg}
-            </form>
+                    <button type="button" className="newquizlet-add" onClick={this.addMoreCard}><span>+ ADD CARD</span></button>
+                </form>
+            </Grid>
         )
     }
 }

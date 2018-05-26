@@ -24,6 +24,7 @@ export default class LearningCenter extends Component {
         const learningChoices = ["LEARN", "FLASHCARDS", "WRITE"];
         return (
             <div>
+                <Link to="/existingquizlet">Back to quizlets</Link>
                 {learningChoices.map(choice => (
                     <div key={choice}>
                         <Link to={title+"/"+choice.toLowerCase()}>{choice}</Link>

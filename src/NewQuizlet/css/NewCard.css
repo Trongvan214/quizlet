@@ -1,3 +1,51 @@
 .card-form > div {
     display: inline-block;
 }
+
+.newcard-form {
+    width: 100%;
+    height: 100px;
+}
+.newcard-index {
+    text-align: center;
+    line-height: 100px;
+}
+.newcard-index > span {
+    font-weight: bold;
+    font-size: 1em;
+    color: #97a5aa;
+}
+
+.newcard-col {
+    position: relative;
+    height: 100%;
+}
+
+
+.newcard-box {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.newcard-box > input {
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border-bottom: 2px solid black;
+    margin-bottom: 3px;
+}
+
+.newcard-box > input:focus {
+    border-bottom-color: #f20707;
+}
+
+.newcard-box > label {
+    color: #97a5aa;
+    font-size: 0.8em;
+}
