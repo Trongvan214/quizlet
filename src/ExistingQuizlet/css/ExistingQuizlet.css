@@ -1,0 +1,30 @@
+.existingquizlet-info {
+    cursor: pointer;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    padding-left: 30px;
+    font-weight: 300;
+    font-size: 1.3em;
+}
+.exisitingQuizlet-create {
+    margin-top: 10px;
+}
+.exisitingQuizlet-create > a{
+    color: white;
+}
+.exisitingQuizlet-edit {
+    float: right;
+    margin: 10px 20px 0 0;
+}
+
+.existingquizlet-info-title {
+    overflow: hidden;
+}
+.existingquizlet-info .bold {
+    font-weight: bold;
+}
+.container > h1 {
+    display: block;
+    border-bottom: 1.5px solid black;
+}

@@ -9,8 +9,8 @@ export default class NewQuizlet extends Component {
         this.state = {
             title: '',
             cards: [],      
-            titleMsg: "Title",
-            errorMsgCards: null,  
+            titleMsg: false,
+            cardMsg: false,  
             editMode: false,
             editUrl: false,
         }
@@ -52,15 +52,18 @@ export default class NewQuizlet extends Component {
         let cards = this.state.cards.slice();
         cards = cards.filter(card => card.term !== "");
         //not fill title
-        if(!title){
-            this.setState({errorMsgTitle: "YOU NEED A TITLE FOR THIS SET."});
-        }
+        if(!title)
+            this.setState({titleMsg: true});
+        else 
+            this.setState({titleMsg: false});
+
         //not fill first 2 cards
-        if(cards.length < 2){
-            this.setState({errorMsg: "YOU NEED PUT DETAISL FOR TWO CARDS."});
-        }
-        //put in localStorage
-        else {
+        if(cards.length < 2)
+            this.setState({cardMsg: true});
+        else   
+            this.setState({cardMsg: false});
+
+        if(cards.length >= 2 && title){
             localStorage.setItem(title, JSON.stringify(cards));
             this.props.history.push('/qname/' + this.state.title);
         }
@@ -88,16 +91,43 @@ export default class NewQuizlet extends Component {
                                 placeholder="Subject, chapter, unit"
                                 onChange={this.onChangeTitle}
                             />
-                            <label htmlFor="newcard-title">Title</label>
+                            <label htmlFor="newcard-title">
+                                { this.state.titleMsg ? 
+                                    <span className="newquizlet-title-msg">PLEASE ENTER A TITLE TO CREATE YOUR SET.</span> 
+                                    : 
+                                    <span>Title</span> 
+                                }
+                            </label>
                         </div>
                         <div className="newquizlet-buttons">
-                            <Button type="button" bsStyle="danger" bsSize="large" onClick={this.edit} className="newquizlet-edit"><span>Edit</span></Button>
-                            <Button type="submit" bsStyle="info" bsSize="large" onClick={this.handleSubmit} className="newquizlet-submit">
+                            <Button 
+                                type="button" 
+                                bsStyle="danger" 
+                                bsSize="large" 
+                                onClick={this.edit} 
+                                className="newquizlet-edit"
+                            >
+                                <span>Edit</span>
+                            </Button>
+                            <Button 
+                                type="submit" 
+                                bsStyle="info" 
+                                bsSize="large" 
+                                onClick={this.handleSubmit} 
+                                className="newquizlet-submit"
+                            >
                                 {this.state.editUrl ? "Save" : "Create"}
                             </Button>
                         </div>
                     </div>
-                    <div className="newquizlet-error">{this.state.errorMsg}</div>
+                    {
+                        this.state.cardMsg ? 
+                        <div className="newquizlet-error">
+                            YOU NEED TWO CARDS AND A DEFINITION LANGUAGE TO CREATE A SET.
+                        </div>
+                        :
+                        null
+                    }
                     {this.state.cards.map((card, index) => (
                         <NewCard 
                             key={index}
