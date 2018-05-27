@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Button } from 'react-bootstrap';
+import {  Row, Col, Button } from 'react-bootstrap';
 import '../css/ShowCards.css';
 
 export default class ShowCards extends Component {
@@ -28,7 +28,15 @@ export default class ShowCards extends Component {
     }
     render(){
         return (
-            <Grid>
+            <React.Fragment>
+                <Row className="showcard-title">
+                    <Col md={3} sm={3}>
+                        <p>Term</p>
+                    </Col>
+                    <Col md={6} sm={5}>
+                        <p>Definition</p>
+                    </Col>
+                </Row>
                 {this.state.cards.map((card, index) => (
                     <Row className="showcard-info" key={index}>
                         <Col md={3} sm={3}>
@@ -39,15 +47,23 @@ export default class ShowCards extends Component {
                         </Col>
                         <Col md={3} sm={4}>
                             {
-                                card.starred ? <span onClick={()=>this.starred(index)}>&#9733;</span>
-                                : <span onClick={()=>this.starred(index)}>&#9734;</span>
+                                card.starred ? <span className="showcard-star" onClick={()=>this.starred(index)}>&#9733;</span>
+                                : <span className="showcard-star" onClick={()=>this.starred(index)}>&#9734;</span>
                             }
-                            <span>&#128393;</span>
+                            <span className="showcard-pen" >&#128393;</span>
                         </Col>
                     </Row>
                 ))}
-                <Button type="button" bsStyle="danger" onClick={this.edit}>Add or Remove Terms</Button>
-            </Grid>
+                <Row>
+                    <button  
+                        className="showcard-add" 
+                        type="button" 
+                        onClick={this.edit}
+                    >
+                        + Add or Remove Terms
+                    </button>
+                </Row>
+            </React.Fragment>
         )
     }
 }
