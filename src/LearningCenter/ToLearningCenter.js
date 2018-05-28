@@ -1,16 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import './css/ToLearningCenter.css';
 
-export default class ToLearningCenter extends Component {
-    render(){
-        let style = {
-            "display": "block",
-            "textAlign": "center",
-        }
-        return (
-            <div style={style}>
-                 <Link to={`/qname/${this.props.qname}`}>LearningCenter</Link>
-            </div>
-        )
-    }
-}
+export default ({qname}) => (
+    <div className="tolearningcenter">
+        <Link to={`/qname/${qname}`}>Learning Center</Link>
+    </div>
+)

@@ -1,0 +1,37 @@
+.question-wrapper .multiplechoice-question {
+    width: 60%;
+    margin: auto;
+    overflow: hidden;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    border-bottom: 1.5px solid black;
+    margin-bottom: 20px;
+}
+.choices-wrapper {
+    list-style: none;
+    width: 100%;
+    text-align: center;
+}
+.choices-wrapper li {
+    display: inline-block;
+    margin: 10px 70px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.answerscreen {
+    margin-left: 20px;
+}
+
+.answerscreen-green {
+    color: green;
+}
+
+.answerscreen-red {
+    color: red;
+}
+
+.answerscreen-term {
+    color: #97a5aa;
+}

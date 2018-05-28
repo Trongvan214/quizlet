@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Grid, Col, Row } from 'react-bootstrap';
 import ToLearningCenter from '../../ToLearningCenter';
 import MultipleChoice from './MultipleChoice';
 import ProgressScreen from '../../ProgressScreen/js/ProgressScreen';
 import ScoreBoard from '../../ScoreBoard';
 import Option from '../../Option';
+import '../css/LearnCards.css';
 
 export default class LearnCards extends Component {
     state = { 
@@ -120,23 +121,29 @@ export default class LearnCards extends Component {
         if(this.state.shouldStop) return <ProgressScreen progress={this.state.progress}/>
 
         return (
-            <div>
+            <Grid>
                 <ToLearningCenter qname={this.state.title} />
-                <Option 
-                    option={this.state.option} 
-                    getOption={this.updateOption} 
-                    cards={this.state.cards}
-                />
-                <Button type="button" bsStyle="danger" onClick={this.shuffle}>Shuffle</Button>
-                <MultipleChoice 
-                    choices={this.state.currentChoiceCards}
-                    card={this.state.currentCard}
-                    answerWith={this.state.option.answerWith}
-                    nextQuestion={this.nextQuestion}
-                />
-                <ScoreBoard scores={this.state.scores} />
-                <Button type="button" bsStyle="danger" onClick={this.stop}>End</Button>
-            </div>
+                <Row>
+                    <Option 
+                        option={this.state.option} 
+                        getOption={this.updateOption} 
+                        cards={this.state.cards}
+                    />
+                    <ScoreBoard scores={this.state.scores} />
+                </Row>
+                <Row>
+                    <MultipleChoice 
+                        choices={this.state.currentChoiceCards}
+                        card={this.state.currentCard}
+                        answerWith={this.state.option.answerWith}
+                        nextQuestion={this.nextQuestion}
+                    />
+                </Row>
+                <Row className="learncards-buttons">
+                    <Button type="button" bsStyle="danger" bsSize="large" onClick={this.shuffle}>Shuffle</Button>
+                    <Button type="button" bsStyle="danger" bsSize="large" onClick={this.stop}>End</Button>
+                </Row>
+            </Grid>
         )
     }
 }

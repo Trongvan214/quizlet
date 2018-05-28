@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import './css/Option.css';
+
 export default class Option extends Component {
     state = {
         disableStarredButton: true,
@@ -25,25 +27,28 @@ export default class Option extends Component {
     render(){
         const { studyType, answerWith } = this.props.option;
         return (
-            <div>
-                <p>Study Type</p>
-                <ButtonToolbar>
-                    <ToggleButtonGroup type="radio" name="studyType" value={studyType} 
-                            onChange={(e)=>this.handleOptionChange(e,"studyType")}>
-                            <ToggleButton value={0} disabled={this.state.disableStarredButton}>All</ToggleButton>
-                            <ToggleButton value={1} disabled={this.state.disableStarredButton}>Starred</ToggleButton>
-                    </ToggleButtonGroup>
-                </ButtonToolbar>
-
-                <p>Answer With</p>
-                <ButtonToolbar>
-                    <ToggleButtonGroup type="radio" name="answerWith" value={answerWith}
-                        onChange={(e)=>this.handleOptionChange(e,"answerWith")}>
-                        <ToggleButton value={0}>Term</ToggleButton>
-                        <ToggleButton value={1}>Definition</ToggleButton>
-                        {this.props.flashCard ? <ToggleButton value={2}>Both</ToggleButton> : null}
-                    </ToggleButtonGroup>
-                </ButtonToolbar>
+            <div className="option">
+                <div className="option-button-wrapper">
+                    <span>Study Type</span>
+                    <ButtonToolbar>
+                        <ToggleButtonGroup type="radio" name="studyType" value={studyType} 
+                                onChange={(e)=>this.handleOptionChange(e,"studyType")}>
+                                <ToggleButton value={0} disabled={this.state.disableStarredButton}>All</ToggleButton>
+                                <ToggleButton value={1} disabled={this.state.disableStarredButton}>Starred</ToggleButton>
+                        </ToggleButtonGroup>
+                    </ButtonToolbar>
+                </div>
+                <div className="option-button-wrapper">
+                    <span>Answer With</span>
+                    <ButtonToolbar>
+                        <ToggleButtonGroup type="radio" name="answerWith" value={answerWith}
+                            onChange={(e)=>this.handleOptionChange(e,"answerWith")}>
+                            <ToggleButton value={0}>Term</ToggleButton>
+                            <ToggleButton value={1}>Definition</ToggleButton>
+                            {this.props.flashCard ? <ToggleButton value={2}>Both</ToggleButton> : null}
+                        </ToggleButtonGroup>
+                    </ButtonToolbar>
+                </div>
             </div>
         )
     }

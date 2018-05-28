@@ -1,9 +1,10 @@
 import React from 'react';
+import './css/ScoreBoard.css';
 
 const ScoreBoard = ({scores}) => (
-    <div>
-        <p>Number of right answers: {scores.correct}</p>
-        <p>Number of wrong answers: {scores.incorrect}</p>
-    </div>
+    <ul className="score-board">
+        <li>Correct: {scores.correct}</li>
+        <li>Incorrect: {scores.incorrect}</li>
+    </ul>
 )
 export default ScoreBoard 
