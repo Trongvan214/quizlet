@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Grid, Row } from 'react-bootstrap';
 import ToLearningCenter from '../../ToLearningCenter';
 import MultipleChoice from './MultipleChoice';
-import ProgressScreen from '../../ProgressScreen/js/ProgressScreen';
 import ScoreBoard from '../../ScoreBoard';
 import Option from '../../Option';
 import '../css/LearnCards.css';
@@ -27,7 +26,6 @@ export default class LearnCards extends Component {
             "correct": 0,
             "incorrect": 0,
         },                     
-        shouldStop: false,
     }
     componentDidMount(){
         let title = this.props.match.params.qname;
@@ -79,9 +77,6 @@ export default class LearnCards extends Component {
             [option]: value,
         }});
     }
-    stop = () => {
-        this.setState({shouldStop: true});
-    }
     componentDidUpdate(prevProps, prevState){
         //scenario to update state 
         let differentCurrentQuestionIndex = this.state.currentQuestionIndex !== prevState.currentQuestionIndex;
@@ -118,7 +113,6 @@ export default class LearnCards extends Component {
         }
     }
     render(){
-        if(this.state.shouldStop) return <ProgressScreen progress={this.state.progress}/>
 
         return (
             <Grid>
@@ -141,7 +135,6 @@ export default class LearnCards extends Component {
                 </Row>
                 <Row className="learncards-buttons">
                     <Button type="button" bsStyle="danger" bsSize="large" onClick={this.shuffle}>Shuffle</Button>
-                    <Button type="button" bsStyle="danger" bsSize="large" onClick={this.stop}>End</Button>
                 </Row>
             </Grid>
         )

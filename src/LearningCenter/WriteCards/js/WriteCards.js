@@ -4,7 +4,6 @@ import { Button, Grid, Row } from 'react-bootstrap';
 import Option from '../../Option';
 import ScoreBoard from '../../ScoreBoard';
 import WriteAnswer from './WriteAnswer';
-import ProgressScreen from '../../ProgressScreen/js/ProgressScreen';
 import '../css/WriteCards.css';
 
 export default class WriteQuiz extends Component {
@@ -22,7 +21,6 @@ export default class WriteQuiz extends Component {
             "correct": 0,
             "incorrect": 0,
         },      
-        shouldStop: false,
     }
     componentDidMount(){
         let title = this.props.match.params.qname;
@@ -104,12 +102,7 @@ export default class WriteQuiz extends Component {
             this.setState({cards, currentCardIndex, currentCard });
         }
     }
-    stop = () => {
-        this.setState({shouldStop: true});
-    }
     render(){
-        if(this.state.shouldStop) return <ProgressScreen progress={this.state.progress}/>
-
         return (
             <Grid>
                 <ToLearningCenter qname={this.state.title} />
@@ -130,7 +123,6 @@ export default class WriteQuiz extends Component {
                 </Row>
                 <Row className="writecards-buttons">
                     <Button type="button" bsStyle="danger" onClick={this.shuffle}>Shuffle</Button>
-                    <Button type="button" bsStyle="danger" onClick={this.stop}>End</Button>
                 </Row>
             </Grid>
         )

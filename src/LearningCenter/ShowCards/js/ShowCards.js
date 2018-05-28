@@ -6,6 +6,7 @@ export default class ShowCards extends Component {
     constructor(props){
         super(props);
         this.state = {
+            title: '',
             cards: [],
         }
     }
@@ -19,7 +20,8 @@ export default class ShowCards extends Component {
         let differentProps = JSON.stringify(prevProps) !== JSON.stringify(this.props);
         if(differentProps){
             let cards = this.props.cards;
-            this.setState({cards});
+            let title = this.props.title;
+            this.setState({cards, title});
         }
     }
     edit = () => {
@@ -50,7 +52,6 @@ export default class ShowCards extends Component {
                                 card.starred ? <span className="showcard-star" onClick={()=>this.starred(index)}>&#9733;</span>
                                 : <span className="showcard-star" onClick={()=>this.starred(index)}>&#9734;</span>
                             }
-                            <span className="showcard-pen" >&#128393;</span>
                         </Col>
                     </Row>
                 ))}
@@ -60,7 +61,7 @@ export default class ShowCards extends Component {
                         type="button" 
                         onClick={this.edit}
                     >
-                        + Add or Remove Terms
+                        + Add or Remove Terms or Edit
                     </button>
                 </Row>
             </React.Fragment>

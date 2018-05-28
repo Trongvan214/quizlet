@@ -37,7 +37,12 @@ export default class LearningCenter extends Component {
                         ))}
                     </ul>
                 </Row>
-                <ShowCards cards={this.state.cards} update={this.updateCards} history={this.props.history} pathname={this.props.location.pathname}/>
+                <ShowCards 
+                    title={this.state.title}
+                    cards={this.state.cards} 
+                    update={this.updateCards} 
+                    history={this.props.history} 
+                    pathname={this.props.location.pathname}/>
             </Grid>
         )
     }
