@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../css/ToggleCard.css';
 
 export default class ToggleCard extends Component {
     state = {
@@ -14,29 +15,29 @@ export default class ToggleCard extends Component {
         let questionProperty = Object.keys(card)[questionWith]; // "term" or "definition"
         if(this.props.both){
             return (
-                <React.Fragment>
-                    <div>
-                        <p>Question</p>
+                <div className="togglecard">
+                    <div className="togglecard-wrapper">
+                    <span className="togglecard-term">Question</span>
                         <p>{card.term}</p>
                     </div>
-                    <div>
-                        <p>Answer</p>
+                    <div className="togglecard-wrapper">
+                    <span className="togglecard-term">Definition</span>
                         <p>{card.definition}</p>
                     </div>
-                </React.Fragment>
+                </div>
             )
         }
         if(this.state.toggle){
             return (
-                <div onClick={this.toggle}>
-                    <p>Question</p>
+                <div onClick={this.toggle} className="togglecard">
+                    <span className="togglecard-term">Question</span>
                     <p>{card[questionProperty]}</p>
                 </div>
             )
         }
         return (
-            <div onClick={this.toggle}>
-                <p>Answer</p>
+            <div onClick={this.toggle} className="togglecard">
+                    <span className="togglecard-term">Definition</span>
                 <p>{card[answerProperty]}</p>
             </div>
         )

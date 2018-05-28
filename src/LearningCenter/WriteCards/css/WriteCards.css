@@ -1,0 +1,8 @@
+.writecards-buttons {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.writecards-buttons > button {
+    margin: 10px 20px;
+}

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import ToLearningCenter from '../../ToLearningCenter';
-import { Button } from 'react-bootstrap';
+import { Button, Grid, Row } from 'react-bootstrap';
 import Option from '../../Option';
 import ScoreBoard from '../../ScoreBoard';
 import WriteAnswer from './WriteAnswer';
 import ProgressScreen from '../../ProgressScreen/js/ProgressScreen';
+import '../css/WriteCards.css';
 
 export default class WriteQuiz extends Component {
     state = { 
@@ -110,22 +111,28 @@ export default class WriteQuiz extends Component {
         if(this.state.shouldStop) return <ProgressScreen progress={this.state.progress}/>
 
         return (
-            <div>
+            <Grid>
                 <ToLearningCenter qname={this.state.title} />
-                <Option 
-                    option={this.state.option} 
-                    getOption={this.updateOption} 
-                    cards={this.state.cards}
-                />
-                <Button type="button" bsStyle="danger" onClick={this.shuffle}>Shuffle</Button>
-                <WriteAnswer 
-                    card={this.state.currentCard}    
-                    answerWith={this.state.option.answerWith}
-                    nextQuestion={this.nextQuestion}
-                />
+                <Row>
+                    <Option 
+                        option={this.state.option} 
+                        getOption={this.updateOption} 
+                        cards={this.state.cards}
+                    />
+                </Row>
                 <ScoreBoard scores={this.state.scores} />
-                <Button type="button" bsStyle="danger" onClick={this.stop}>End</Button>
-            </div>
+                <Row>
+                    <WriteAnswer 
+                        card={this.state.currentCard}    
+                        answerWith={this.state.option.answerWith}
+                        nextQuestion={this.nextQuestion}
+                    />
+                </Row>
+                <Row className="writecards-buttons">
+                    <Button type="button" bsStyle="danger" onClick={this.shuffle}>Shuffle</Button>
+                    <Button type="button" bsStyle="danger" onClick={this.stop}>End</Button>
+                </Row>
+            </Grid>
         )
     }
 }

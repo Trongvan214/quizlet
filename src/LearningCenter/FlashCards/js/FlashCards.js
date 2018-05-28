@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Pager, Button } from 'react-bootstrap';
+import { Pager, Button, Grid, Row } from 'react-bootstrap';
 import Option from '../../Option';
 import ToLearningCenter from '../../ToLearningCenter';
 import ToggleCard from './ToggleCard';
+import '../css/FlashCards.css';
 
 export default class FlashCardsQuiz extends Component {
     state = { 
@@ -94,25 +95,31 @@ export default class FlashCardsQuiz extends Component {
     render(){
         if(this.state.shouldStop) return <h1>Trong is the best</h1>;
         return (
-            <div>
+            <Grid>
                 <ToLearningCenter qname={this.state.title} />
-                <Option 
-                    option={this.state.option} 
-                    getOption={this.updateOption} 
-                    cards={this.state.cards} 
-                    flashCard
-                />
-                <Button type="button" onClick={this.shuffle} bsStyle="danger">Shuffle</Button>
-                <ToggleCard 
-                    card={this.state.currentCard} 
-                    answerWith={this.state.option.answerWith} 
-                    both={this.state.option.answerWith === 2 ? true : false}
-                />
+                <Row>
+                    <Option 
+                        option={this.state.option} 
+                        getOption={this.updateOption} 
+                        cards={this.state.cards} 
+                        flashCard
+                    />
+                </Row>
+                <Row>
+                    <ToggleCard 
+                        card={this.state.currentCard} 
+                        answerWith={this.state.option.answerWith} 
+                        both={this.state.option.answerWith === 2 ? true : false}
+                    />
+                </Row>
+                <Row className="flashcard-button">
+                    <Button type="button" onClick={this.shuffle} bsStyle="danger">Shuffle</Button>
+                </Row>
                 <Pager>
                     <Pager.Item onClick={()=>this.changeCard("prev")}>Previous</Pager.Item>
                     <Pager.Item onClick={()=>this.changeCard("next")}>Next</Pager.Item>
                 </Pager>
-            </div>
+            </Grid>
         )
     }
 }

@@ -21,9 +21,14 @@
 }
 
 .answerscreen {
-    margin-left: 20px;
+    width: 60%;
+    margin: auto;
+    text-align: center;
 }
 
+.answerscreen-wrapper span {
+    font-size: 1.3em;
+}
 .answerscreen-green {
     color: green;
 }

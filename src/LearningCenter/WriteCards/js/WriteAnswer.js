@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, Button } from 'react-bootstrap';
+import '../css/WriteAnswer.css';
 
 export default class WriteAnswer extends Component {
     state = {
@@ -50,8 +51,8 @@ export default class WriteAnswer extends Component {
                                     />   
         }
         return (
-            <div>
-                <p>Question</p>
+            <div className="writeanswer">
+                <span>Question</span>
                 <p>{this.state.question}</p>
                 <FormGroup>
                     <FormControl 
@@ -76,20 +77,24 @@ class AnswerScreen extends Component {
         const { userAnswer, question, answer, nextQuestion, abandonQuestion } = this.props;
         let isCorrect = userAnswer.toLowerCase() === answer.toLowerCase();
         return (
-            <div>
-                <h1>{ isCorrect ? "Correct! Good job" : "Incorrect! Study this one!"}</h1>
-                <div>
-                    <p>PROMPT</p>
+            <div className="answerscreen">
+                <h1>{ isCorrect ? 
+                        <span className="answerscreen-green">{"Correct! Good job"}</span>
+                        : 
+                        <span className="answerscreen-red">{"Incorrect! Study this one!"}</span>}
+                </h1>
+                <div className="answerscreen-wrapper">
+                    <span>PROMPT</span>
                     <p>{question}</p>
                 </div>
-                <div>
-                    <p>CORRECT ANSWER</p>
+                <div className="answerscreen-wrapper">
+                    <span className="answerscreen-green">CORRECT ANSWER</span>
                     <p>{answer}</p>
                 </div>
                 { 
                     !isCorrect && !abandonQuestion ? 
                     <React.Fragment>
-                        <p>YOU PICKED</p>
+                        <span>YOU PICKED</span>
                         <p>{ !userAnswer ? "Nothing" : userAnswer }</p>
                     </React.Fragment>
                     : 

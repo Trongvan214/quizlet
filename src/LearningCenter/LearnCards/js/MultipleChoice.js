@@ -59,12 +59,13 @@ class AnswerScreen extends Component {
                 <h1>{ isCorrect ? 
                         <span className="answerscreen-green">{"Correct! Good job"}</span>
                         : 
-                        <span className="answerscreen-red">{"Incorrect! Study this one!"}</span>}</h1>
-                <div className="answer-screen-wrapper">
-                    <span className="answerscreen-term">TERM</span>
+                        <span className="answerscreen-red">{"Incorrect! Study this one!"}</span>}
+                </h1>
+                <div className="answerscreen-wrapper">
+                    <span>TERM</span>
                     <p>{question}</p>
                 </div>
-                <div className="answer-screen-wrapper">
+                <div className="answerscreen-wrapper">
                     <span className="answerscreen-green">CORRECT ANSWER</span>
                     <p>{answer}</p>
                 </div>

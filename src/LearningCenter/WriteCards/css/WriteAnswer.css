@@ -1,0 +1,24 @@
+.writeanswer {
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+.writeanswer > span  {
+    color: #97a5aa;
+    font-size: 1.5em;
+}
+
+.answerscreen-wrapper span {
+    font-size: 1.3em;
+}
+.answerscreen-green {
+    color: green;
+}
+
+.answerscreen-red {
+    color: red;
+}
+
+.answerscreen-term {
+    color: #97a5aa;
+}

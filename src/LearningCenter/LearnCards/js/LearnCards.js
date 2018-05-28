@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Col, Row } from 'react-bootstrap';
+import { Button, Grid, Row } from 'react-bootstrap';
 import ToLearningCenter from '../../ToLearningCenter';
 import MultipleChoice from './MultipleChoice';
 import ProgressScreen from '../../ProgressScreen/js/ProgressScreen';
@@ -129,8 +129,8 @@ export default class LearnCards extends Component {
                         getOption={this.updateOption} 
                         cards={this.state.cards}
                     />
-                    <ScoreBoard scores={this.state.scores} />
                 </Row>
+                <ScoreBoard scores={this.state.scores} />
                 <Row>
                     <MultipleChoice 
                         choices={this.state.currentChoiceCards}
